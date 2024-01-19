@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arithmetic</title>
+</head>
+<body>
+    <section>
+        <h1>Arithmetic</h1>
+        <input id="first-number">
+        <label>+</label>
+        <input id="second-number">
+        <button onclick="add()">=</button>
+        <label id="result"></label>
+    </section>
+    <script>
+        function add(){
+            let firstNumber = document.getElementById('first-number')
+            let secondNumber = document.getElementById('second-number')
+            let result = Number(firstNumber.value) + Number(secondNumber.value)
+            document.getElementById('result').innerHTML = result
+        }
+    </script>
+</body>
+</html>
