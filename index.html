@@ -15,11 +15,12 @@
         <label id="result"></label>
     </section>
     <script>
-        function add(){
+        async function add(){
             let firstNumber = document.getElementById('first-number')
             let secondNumber = document.getElementById('second-number')
-            let result = Number(firstNumber.value) + Number(secondNumber.value)
-            document.getElementById('result').innerHTML = result
+            const response = await fetch('http://localhost:3000/add/'+firstNumber.value+'/'+secondNumber.value)
+            const responseJson = await response.json()
+            document.getElementById('result').innerHTML = responseJson.result
         }
     </script>
 </body>
