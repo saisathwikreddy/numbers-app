@@ -3,24 +3,63 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Arithmetic</title>
+    <title>Document</title>
+    <style>
+        .column {
+           float: left;
+           width: 50%;
+           padding: 10px;
+           box-sizing: border-box;
+          
+        }
+        .row::after {
+           content: "";
+           clear: both;
+           display: table;
+        }
+     </style>
 </head>
 <body>
-    <section>
-        <h1>Arithmetic</h1>
-        <input id="first-number">
-        <label>+</label>
-        <input id="second-number">
-        <button onclick="add()">=</button>
-        <label id="result"></label>
-    </section>
+    <div class="row">
+        <div class="column">          
+           <section>
+            <h2>Arithmetic</h2>
+            <input id="operand1"/> 
+            <label>+</label>
+            <input id="operand2"/>
+            <button onclick="add()">=</button>
+            <label id="sum"></label>  
+        </section>
+        </div>
+        <div class="column">
+            <section>
+                <h2>Prime check</h2>                
+                <label>Number to test:</label>
+                <input id="numberToTest"/>
+                <button onclick="isPrime()">Check</button>
+                <label id="primeCheckResult"></label>  
+            </section>           
+        </div>       
+     </div>
+    
+   
     <script>
-        async function add(){
-            let firstNumber = document.getElementById('first-number')
-            let secondNumber = document.getElementById('second-number')
-            const response = await fetch('https://arithmetic-service-saisathwikreddy.onrender.com/add/'+firstNumber.value+'/'+secondNumber.value)
-            const responseJson = await response.json()
-            document.getElementById('result').innerHTML = responseJson.result
+        async function add() {
+            const operand1Input = document.getElementById("operand1");
+            const operand2Input = document.getElementById("operand2");
+            let n = operand1Input.value;
+            let m = operand2Input.value;
+            const response = await fetch("https://arithmetic-service-saisathwikreddy.onrender.com/add/" + n + "/" + m);
+            const sum = await response.json();
+            document.getElementById("sum").innerHTML = sum.result;
+        }
+
+        async function isPrime() {
+            const numberToTest = document.getElementById("numberToTest");            
+            let n = numberToTest.value;            
+            const response = await fetch("https://prime-service-saisathwikreddy.onrender.com/primes/" + n);
+            const result = await response.json();
+            document.getElementById("primeCheckResult").innerHTML = result;
         }
     </script>
 </body>
