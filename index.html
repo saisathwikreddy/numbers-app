@@ -74,7 +74,7 @@
         async function cipherText(){
             const text =  document .getElementById("text");
             let k = text.value;
-            const response = await fetch("https://cipher-service-saisathwikreddy.onrender.com/cipher/caesar/" + k + "/3");
+            const response = await fetch("https://cipher-service-saisathwikreddy.onrender.com/ciphers/caesar/" + k + "/3");
             const cipheredText = await response.json();
             document.getElementById("caeserCipheredtext").innerHTML = cipheredText;
         }
