@@ -1,83 +1,103 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
     <style>
-        .column {
-           float: left;
-           width: 33.33%;
-           padding: 10px;
-           box-sizing: border-box;
-          
-        }
-        .row::after {
-           content: "";
-           clear: both;
-           display: table;
-        }
-     </style>
-</head>
-<body>
+      .column {
+        float: left;
+        width: 33.33%;
+        padding: 10px;
+        box-sizing: border-box;
+      }
+      .row::after {
+        content: "";
+        clear: both;
+        display: table;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="row" id="login">
+
+    </div>
     <div class="row">
-        <div class="column">          
-           <section>
-            <h2>Arithmetic</h2>
-            <input id="operand1"/> 
-            <label>+</label>
-            <input id="operand2"/>
-            <button onclick="add()">=</button>
-            <label id="sum"></label>  
+      <div class="column">
+        <section>
+          <h2>Arithmetic</h2>
+          <input id="operand1" />
+          <label>+</label>
+          <input id="operand2" />
+          <button onclick="add()">=</button>
+          <label id="sum"></label>
         </section>
-        </div>
-        <div class="column">
-            <section>
-                <h2>Prime check</h2>                
-                <label>Number to test:</label>
-                <input id="numberToTest"/>
-                <button onclick="isPrime()">Check</button>
-                <label id="primeCheckResult"></label>  
-            </section>           
-        </div>
-        <div class="column">
-            <section>
-                <h2>Caeser cipher</h2>                
-                <label>Text:</label>
-                <input id="text"/>
-                <button onclick="cipherText()">Cipher</button>
-                <label id="caeserCipheredtext"></label>  
-            </section>           
-        </div>       
-     </div>
-    
-   
+      </div>
+      <div class="column">
+        <section>
+          <h2>Prime check</h2>
+          <label>Number to test:</label>
+          <input id="numberToTest" />
+          <button onclick="isPrime()">Check</button>
+          <label id="primeCheckResult"></label>
+        </section>
+      </div>
+      <div class="column">
+        <section>
+          <h2>Caeser cipher</h2>
+          <label>Text:</label>
+          <input id="text" />
+          <button onclick="cipherText()">Cipher</button>
+          <label id="caeserCipheredtext"></label>
+        </section>
+      </div>
+    </div>
+    <script src="configuration.js"></script>
     <script>
-        async function add() {
-            const operand1Input = document.getElementById("operand1");
-            const operand2Input = document.getElementById("operand2");
-            let n = operand1Input.value;
-            let m = operand2Input.value;
-            const response = await fetch("https://arithmetic-service-saisathwikreddy.onrender.com/add/" + n + "/" + m);
-            const sum = await response.json();
-            document.getElementById("sum").innerHTML = sum.result;
-        }
+      let hosts = configuration.hosts;
+      displayLogin(); 
 
-        async function isPrime() {
-            const numberToTest = document.getElementById("numberToTest");            
-            let n = numberToTest.value;            
-            const response = await fetch("https://prime-service-saisathwikreddy.onrender.com/primes/" + n);
-            const result = await response.json();
-            document.getElementById("primeCheckResult").innerHTML = result;
-        }
+      async function add() {
+        const operand1Input = document.getElementById("operand1");
+        const operand2Input = document.getElementById("operand2");
+        let n = operand1Input.value;
+        let m = operand2Input.value;
+        const response = await fetch(
+          "https://arithmetic-service-saisathwikreddy.onrender.com/add/" +
+            n +
+            "/" +
+            m
+        );
+        const sum = await response.json();
+        document.getElementById("sum").innerHTML = sum.result;
+      }
 
-        async function cipherText(){
-            const text =  document .getElementById("text");
-            let k = text.value;
-            const response = await fetch("https://cipher-service-saisathwikreddy.onrender.com/ciphers/caesar/" + k + "/3");
-            const cipheredText = await response.json();
-            document.getElementById("caeserCipheredtext").innerHTML = cipheredText.cipher;
+      async function isPrime() {
+        const numberToTest = document.getElementById("numberToTest");
+        let n = numberToTest.value;
+        const headers = {
+            "Authorization": "Bearer " + configuration.token,
         }
+        console.log(configuration.token);
+        const response = await fetch(
+            hosts.primes_service+"/primes/" + n, {headers: headers}
+        );
+        const result = await response.json();
+        document.getElementById("primeCheckResult").innerHTML = result;
+      }
+
+      async function cipherText() {
+        const text = document.getElementById("text");
+        let k = text.value;
+        const response = await fetch(
+          "https://cipher-service-saisathwikreddy.onrender.com/ciphers/caesar/" +
+            k +
+            "/3"
+        );
+        const cipheredText = await response.json();
+        document.getElementById("caeserCipheredtext").innerHTML =
+          cipheredText.cipher;
+      }
     </script>
-</body>
+  </body>
 </html>
